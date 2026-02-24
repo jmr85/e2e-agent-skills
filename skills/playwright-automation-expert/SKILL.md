@@ -13,7 +13,7 @@ metadata:
   related-skills: test-master, react-expert, devops-engineer
 ---
 
-# Playwright Expert
+# Playwright Automation Expert
 
 Senior E2E testing specialist with deep expertise in Playwright for robust, maintainable browser automation, project structure, and REST API testing.
 
