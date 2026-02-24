@@ -1,5 +1,5 @@
 ---
-name: playwright-expert-plus
+name: playwright-expert
 description: Use when writing E2E tests with Playwright, setting up test infrastructure, debugging flaky browser tests, organizing project structure, or testing REST APIs. Invoke for browser automation, E2E tests, Page Object Model, test flakiness, visual testing, project scaffolding, folder layout, API testing, JSON schema validation.
 license: MIT
 metadata:
