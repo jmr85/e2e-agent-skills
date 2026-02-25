@@ -4,13 +4,12 @@ description: Use when writing E2E tests with Playwright, setting up test infrast
 license: MIT
 metadata:
   author: https://github.com/jmr85
-  version: "2.0.0"
+  version: "1.0.0"
   domain: quality
   triggers: Playwright, E2E test, end-to-end, browser testing, automation, UI testing, visual testing, project structure, folder layout, scaffolding, naming conventions, setup, API testing, REST API, HTTP codes, idempotency, performance, JSON schema
   role: specialist
   scope: testing
   output-format: code
-  related-skills: test-master, react-expert, devops-engineer
 ---
 
 # Playwright Automation Expert
