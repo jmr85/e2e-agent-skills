@@ -112,6 +112,4 @@ The skill can automatically generate:
 
 ## 📝 License
 
-MIT License.
-
-You may use, modify, and distribute the code freely while maintaining the original license.
+MIT License - See [LICENSE](https://github.com/jmr85/e2e-agent-skills/blob/main/LICENSE) file for details.
