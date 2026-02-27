@@ -13,6 +13,11 @@ You can install the skill directly from GitHub using:
 ```bash
 npx skills add jmr85/e2e-agent-skills
 ```
+or
+
+```bash
+npx skills add https://github.com/jmr85/e2e-agent-skills --skill playwright-automation-expert
+```
 
 ---
 
