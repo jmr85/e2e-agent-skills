@@ -183,10 +183,10 @@ test.describe('POST /api/auth/register — negative', () => {
 
 ## HTTP Status Code Validation
 
-> **Reusable utility:** Copy [`assets/utils/api-assertions.ts`](../assets/utils/api-assertions.ts) into your project's `utils/` folder.
+> **Reusable utility:** Copy [`scripts/utils/api-assertions.ts`](../scripts/utils/api-assertions.ts) into your project's `utils/` folder.
 
 ```typescript
-// utils/api-assertions.ts — see assets/utils/api-assertions.ts for the full source
+// utils/api-assertions.ts — see scripts/utils/api-assertions.ts for the full source
 import { expectStatus, expectSuccess } from '@utils/api-assertions';
 ```
 
@@ -397,10 +397,10 @@ test.describe('API Performance', () => {
 
 ## JSON Schema Validation
 
-> **Reusable utility:** Copy [`assets/utils/schema-validator.ts`](../assets/utils/schema-validator.ts) into your project's `utils/` folder.
+> **Reusable utility:** Copy [`scripts/utils/schema-validator.ts`](../scripts/utils/schema-validator.ts) into your project's `utils/` folder.
 
 ```typescript
-// utils/schema-validator.ts — see assets/utils/schema-validator.ts for the full source
+// utils/schema-validator.ts — see scripts/utils/schema-validator.ts for the full source
 import { validateSchema } from '@utils/schema-validator';
 ```
 

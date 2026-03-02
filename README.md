@@ -19,6 +19,12 @@ or
 npx skills add https://github.com/jmr85/e2e-agent-skills --skill playwright-automation-expert
 ```
 
+or install the BDD / Cucumber skill:
+
+```bash
+npx skills add https://github.com/jmr85/e2e-agent-skills --skill playwright-cucumber-expert
+```
+
 ---
 
 ## 🛠 Requirements
@@ -33,6 +39,7 @@ npx skills add https://github.com/jmr85/e2e-agent-skills --skill playwright-auto
 
 Once installed, the agent will be able to:
 
+**playwright-automation-expert**
 - Generate professional Playwright project structures
 - Apply the Page Object Model
 - Create feature-based organized tests
@@ -40,6 +47,15 @@ Once installed, the agent will be able to:
 - Apply naming conventions
 - Generate scaffolding for new modules
 - Suggest debugging strategies
+
+**playwright-cucumber-expert**
+- Set up `@cucumber/cucumber` + Playwright + TypeScript
+- Write Gherkin `.feature` files (Scenario, Outline, Background, DataTable)
+- Implement `Given`/`When`/`Then` step definitions
+- Configure the `World` class for browser lifecycle management
+- Write `Before`/`After` hooks with screenshot embedding on failure
+- Configure `cucumber.js` with multi-profile execution (smoke, regression, CI)
+- Integrate Cucumber into a GitHub Actions CI pipeline
 
 Example usage inside the agent:
 
@@ -54,6 +70,8 @@ Generate an E2E test applying the Page Object Model and anti-flaky best practice
 ```
 
 The skill will automatically load when you mention terms related to:
+
+**playwright-automation-expert:**
 - Playwright
 - E2E test / end-to-end
 - Browser testing / automation
@@ -61,6 +79,14 @@ The skill will automatically load when you mention terms related to:
 - API testing / REST API
 - Project structure / folder layout
 - Visual testing
+
+**playwright-cucumber-expert:**
+- Cucumber, BDD, Gherkin
+- Feature files, step definitions
+- Given / When / Then
+- Scenario, Scenario Outline, Background
+- `@cucumber/cucumber`
+- Behaviour-driven development
 
 ---
 
@@ -80,8 +106,9 @@ e2e/
 
 ---
 
-## 🧠 What the Skill Includes
+## 🧠 What the Skills Include
 
+### playwright-automation-expert
 - Guides for debugging flaky tests
 - Feature-based organization
 - Naming conventions
@@ -89,6 +116,15 @@ e2e/
 - Scalable Page Object Model
 - Best practices for API testing with Playwright
 - Common anti-patterns and how to avoid them
+
+### playwright-cucumber-expert
+- Cucumber + Playwright setup and installation guide
+- Gherkin feature file patterns
+- Step definition implementation with World typing
+- Browser lifecycle management via hooks
+- Multi-profile `cucumber.js` configuration
+- HTML / JSON / JUnit reporting with screenshot embedding
+- GitHub Actions CI integration
 
 ---
 
