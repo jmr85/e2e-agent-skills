@@ -183,23 +183,11 @@ test.describe('POST /api/auth/register — negative', () => {
 
 ## HTTP Status Code Validation
 
+> **Reusable utility:** Copy [`assets/utils/api-assertions.ts`](../assets/utils/api-assertions.ts) into your project's `utils/` folder.
+
 ```typescript
-// utils/api-assertions.ts
-import { APIResponse, expect } from '@playwright/test';
-
-export async function expectStatus(response: APIResponse, expected: number) {
-  expect(
-    response.status(),
-    `Expected HTTP ${expected} but got ${response.status()} — ${response.url()}`
-  ).toBe(expected);
-}
-
-export async function expectSuccess(response: APIResponse) {
-  expect(
-    response.ok(),
-    `Expected 2xx but got ${response.status()} — ${response.url()}`
-  ).toBe(true);
-}
+// utils/api-assertions.ts — see assets/utils/api-assertions.ts for the full source
+import { expectStatus, expectSuccess } from '@utils/api-assertions';
 ```
 
 ```typescript
@@ -409,51 +397,11 @@ test.describe('API Performance', () => {
 
 ## JSON Schema Validation
 
+> **Reusable utility:** Copy [`assets/utils/schema-validator.ts`](../assets/utils/schema-validator.ts) into your project's `utils/` folder.
+
 ```typescript
-// utils/schema-validator.ts
-import { expect } from '@playwright/test';
-
-type Schema = {
-  required?: string[];
-  properties: Record<string, { type: string; format?: string; nullable?: boolean }>;
-};
-
-export function validateSchema(body: unknown, schema: Schema, context = 'response body') {
-  expect(typeof body, `${context} must be an object`).toBe('object');
-  expect(body).not.toBeNull();
-
-  const obj = body as Record<string, unknown>;
-
-  // Check required fields
-  for (const field of schema.required ?? []) {
-    expect(obj, `${context} is missing required field "${field}"`).toHaveProperty(field);
-  }
-
-  // Check property types
-  for (const [field, def] of Object.entries(schema.properties)) {
-    if (field in obj && obj[field] !== null) {
-      expect(
-        typeof obj[field],
-        `${context}.${field} should be ${def.type} but got ${typeof obj[field]}`
-      ).toBe(def.type);
-
-      // Format checks
-      if (def.format === 'email') {
-        expect(obj[field] as string).toMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
-      }
-      if (def.format === 'uuid') {
-        expect(obj[field] as string).toMatch(
-          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-        );
-      }
-      if (def.format === 'iso-date') {
-        expect(new Date(obj[field] as string).toString()).not.toBe('Invalid Date');
-      }
-    } else if (!def.nullable && field in obj) {
-      expect(obj[field], `${context}.${field} should not be null`).not.toBeNull();
-    }
-  }
-}
+// utils/schema-validator.ts — see assets/utils/schema-validator.ts for the full source
+import { validateSchema } from '@utils/schema-validator';
 ```
 
 ```typescript

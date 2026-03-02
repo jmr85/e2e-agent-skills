@@ -189,55 +189,7 @@ Add this script to `package.json` for a one-command setup:
 }
 ```
 
-Create `scripts/scaffold.mjs`:
-
-```javascript
-// scripts/scaffold.mjs
-import { mkdirSync, writeFileSync, existsSync, appendFileSync } from 'fs';
-import { join } from 'path';
-
-const dirs = [
-  'tests/auth',
-  'tests/dashboard',
-  'tests/settings',
-  'pages',
-  'components',
-  'fixtures',
-  'utils',
-  'test-data/auth',
-  'test-data/images',
-  '.github/workflows',
-];
-
-for (const dir of dirs) {
-  mkdirSync(dir, { recursive: true });
-  console.log(`  created: ${dir}/`);
-}
-
-// Fixtures barrel
-writeFileSync(
-  'fixtures/index.ts',
-  `import { test as base, expect } from '@playwright/test';\n\nexport const test = base;\nexport { expect };\n`
-);
-
-// Gitignore entries
-const gitignoreEntries = [
-  '\n# Playwright',
-  'playwright-report/',
-  'test-results/',
-  'blob-report/',
-  'test-data/auth/*.auth.json',
-].join('\n');
-
-if (!existsSync('.gitignore')) {
-  writeFileSync('.gitignore', gitignoreEntries);
-} else {
-  appendFileSync('.gitignore', gitignoreEntries);
-}
-
-console.log('\nPlaywright project structure created successfully.');
-console.log('Next: npx playwright install');
-```
+The full implementation lives at [`scripts/scaffold.mjs`](../scripts/scaffold.mjs) — copy that file into your project's `scripts/` folder.
 
 Run with:
 
