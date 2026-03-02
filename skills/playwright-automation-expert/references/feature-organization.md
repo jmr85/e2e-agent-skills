@@ -168,7 +168,7 @@ export default defineConfig({
     {
       name: 'api',
       testDir: './tests/api',
-      use: { browserName: 'chromium' },
+      // No 'use' block needed: API tests use apiContext, not a browser
     },
   ],
 });
@@ -197,13 +197,11 @@ fixtures/
 
 ```typescript
 // fixtures/index.ts — merge all into one export
-import { test as base } from '@playwright/test';
-import { authFixtures } from './auth.fixture';
-import { catalogFixtures } from './catalog.fixture';
+import { test as authTest } from './auth.fixture';
+import { test as catalogTest } from './catalog.fixture';
 
-export const test = base
-  .extend(authFixtures)
-  .extend(catalogFixtures);
+// Chain .extend() calls: each fixture file exports `test = base.extend(...)`
+export const test = authTest.extend(catalogTest);
 
 export { expect } from '@playwright/test';
 ```

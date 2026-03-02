@@ -60,22 +60,26 @@ export default defineConfig({
 
 ## Authentication Setup
 
-```typescript
-// global-setup.ts
-import { chromium, FullConfig } from '@playwright/test';
+> **Preferred pattern (Playwright v1.38+):** Use project dependencies (`setup` project) instead of `globalSetup` + `require.resolve`. See [Project Dependencies](#project-dependencies) below.
+>
+> The `globalSetup` + `FullConfig` pattern shown here still works but is considered legacy. `FullConfig` is deprecated as of Playwright v1.38.
 
-async function globalSetup(config: FullConfig) {
+```typescript
+// global-setup.ts (legacy pattern — prefer project dependencies)
+import { chromium } from '@playwright/test';
+
+async function globalSetup() {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
   await page.goto('http://localhost:3000/login');
-  await page.getByLabel('Email').fill('user@test.com');
-  await page.getByLabel('Password').fill('password');
+  await page.getByLabel('Email').fill(process.env.TEST_USER_EMAIL || 'user@test.com');
+  await page.getByLabel('Password').fill(process.env.TEST_USER_PASSWORD || 'password');
   await page.getByRole('button', { name: 'Log in' }).click();
   await page.waitForURL(/dashboard/);
 
-  // Save auth state
-  await page.context().storageState({ path: 'auth.json' });
+  // Save auth state — always under test-data/auth/, gitignored
+  await page.context().storageState({ path: 'test-data/auth/user.auth.json' });
   await browser.close();
 }
 
@@ -85,7 +89,7 @@ export default globalSetup;
 export default defineConfig({
   globalSetup: require.resolve('./global-setup'),
   use: {
-    storageState: 'auth.json',
+    storageState: 'test-data/auth/user.auth.json',
   },
 });
 ```
@@ -132,6 +136,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
       - run: npm ci
       - run: npx playwright install --with-deps
       - run: npx playwright test

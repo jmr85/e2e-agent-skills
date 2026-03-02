@@ -73,8 +73,10 @@ page.getByTestId('product-card').getByRole('button', { name: 'Buy' });
 
 ## Handling Multiple Elements
 
+> **Caution:** Avoid `nth()`, `first()`, and `last()` unless you have a specific, documented reason (e.g. "the first item is always the most recently created"). These selectors are positional and break silently when the DOM order changes. Prefer `filter({ hasText: ... })` or a unique `getByTestId()` to target a specific element.
+
 ```typescript
-// Get nth element (0-indexed)
+// Get nth element (0-indexed) — use only when position is semantically meaningful
 page.getByRole('listitem').nth(0);
 page.getByRole('listitem').first();
 page.getByRole('listitem').last();

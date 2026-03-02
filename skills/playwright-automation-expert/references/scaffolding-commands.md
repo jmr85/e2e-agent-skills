@@ -9,12 +9,13 @@ Commands to generate the standard Playwright project structure from scratch.
 ### Base structure (Level 1 — flat)
 
 ```bash
-mkdir -p tests pages components fixtures utils test-data/auth test-data/images .github/workflows
+mkdir -p tests pages components fixtures utils mocks test-data/auth test-data/images .github/workflows
 
 # Placeholder files to preserve folders in git
 touch pages/.gitkeep
 touch components/.gitkeep
 touch utils/.gitkeep
+touch mocks/.gitkeep
 touch test-data/images/.gitkeep
 
 # Gitignore auth state files
@@ -52,8 +53,8 @@ mkdir -p pages/auth pages/dashboard pages/settings
 # Shared components
 mkdir -p components
 
-# Fixtures, utils, test-data
-mkdir -p fixtures utils test-data/auth test-data/images
+# Fixtures, utils, test-data, mocks
+mkdir -p fixtures utils mocks test-data/auth test-data/images
 
 # CI
 mkdir -p .github/workflows
@@ -91,14 +92,11 @@ mkdir -p \
   pages/cart \
   pages/checkout
 
-# Components
+# Components, fixtures, mocks
 mkdir -p components
-
-# Fixtures
 mkdir -p fixtures
-
-# Utils with subfolders
 mkdir -p utils/api utils/builders
+mkdir -p mocks
 
 # Test data by feature
 mkdir -p \
@@ -164,7 +162,7 @@ Write-Host "Base structure created."
 $folders = @(
   "tests\auth", "tests\dashboard", "tests\settings",
   "pages\auth", "pages\dashboard", "pages\settings",
-  "components", "fixtures", "utils",
+  "components", "fixtures", "utils", "mocks",
   "test-data\auth", "test-data\images",
   ".github\workflows"
 )

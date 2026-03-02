@@ -6,7 +6,7 @@ Includes best practices, scalable structure, recommended patterns, and scaffoldi
 
 ---
 
-📦 Installation
+## 📦 Installation
 
 You can install the skill directly from GitHub using:
 

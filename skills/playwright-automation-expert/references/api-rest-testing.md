@@ -6,6 +6,18 @@ Testing REST APIs directly with Playwright's `request` context — no browser re
 
 ## Setup: API Request Context
 
+> **Integration step:** After creating `fixtures/api.fixture.ts`, add it to `fixtures/index.ts` so tests can import from `@fixtures/index` as usual:
+>
+> ```typescript
+> // fixtures/index.ts
+> import { test as apiTest } from './api.fixture';
+> // chain with other fixtures as needed:
+> // import { test as authTest } from './auth.fixture';
+> // export const test = authTest.extend(apiTest);
+> export const test = apiTest;
+> export { expect } from '@playwright/test';
+> ```
+
 ```typescript
 // fixtures/api.fixture.ts
 import { test as base, APIRequestContext } from '@playwright/test';
@@ -320,10 +332,21 @@ test.describe('Idempotency', () => {
 
 ```typescript
 // tests/api/performance.spec.ts
+// IMPORTANT: Thresholds must be derived from measured baselines, not guessed.
+// How to establish baselines:
+//   1. Run the test suite against a known-good environment (staging or local with prod data volume)
+//   2. Record p50 and p95 values over at least 50 warm requests
+//   3. Set the threshold at 2× the observed p95 to allow for CI variance
+//   4. Document the baseline date and environment in a comment below
+//
+// Baselines last measured: <DATE> on <ENVIRONMENT> (e.g. staging, Node 20, 2-core runner)
+// login p95 measured: ~220ms  → threshold set at 500ms (2× buffer for CI)
+// listUsers p95 measured: ~130ms → threshold set at 300ms
+// createUser p95 measured: ~180ms → threshold set at 400ms
 const THRESHOLDS = {
-  login: 500,       // ms
-  listUsers: 300,   // ms
-  createUser: 400,  // ms
+  login: 500,       // ms — update after re-measuring on target environment
+  listUsers: 300,   // ms — update after re-measuring on target environment
+  createUser: 400,  // ms — update after re-measuring on target environment
 };
 
 test.describe('API Performance', () => {
