@@ -10,12 +10,12 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@pages/*": ["tests/page-objects/*"],
-      "@utils/*": ["tests/utils/*"],
-      "@fixtures/*": ["tests/fixtures/*"]
+      "@pages/*":   ["pages/*"],
+      "@utils/*":   ["utils/*"],
+      "@support/*": ["tests/*"]
     },
     "skipLibCheck": true
   },
-  "include": ["tests/**/*"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist", "reports"]
 }

@@ -73,8 +73,8 @@ for (const dir of dirs) {
 
 const requirePaths =
   level >= 3
-    ? `['tests/hooks.ts', 'step_definitions/**/*.steps.ts']`
-    : `['step_definitions/**/*.steps.ts']`;
+    ? `['tests/hooks.ts', 'step_definitions/**/*.ts']`
+    : `['step_definitions/**/*.ts']`;
 
 const profiles =
   level >= 4
@@ -89,24 +89,25 @@ module.exports = {
   default: {
     ...common,
     paths: ['features/**/*.feature'],
-    format: ['progress-bar', 'html:reports/cucumber-report.html', 'json:reports/cucumber-report.json'],
+    format: ['progress', 'html:reports/cucumber-report.html', 'json:reports/cucumber-report.json'],
   },
   smoke: {
     ...common,
     paths: ['features/**/*.feature'],
-    tags: '@smoke',
-    format: ['progress-bar', 'html:reports/smoke-report.html'],
+    tags: '@smoke and not @wip',
+    format: ['progress', 'html:reports/smoke-report.html'],
   },
   regression: {
     ...common,
     paths: ['features/**/*.feature'],
-    tags: '@regression',
-    format: ['progress-bar', 'html:reports/regression-report.html'],
+    tags: '@regression and not @wip',
+    format: ['progress', 'html:reports/regression-report.html'],
   },
   ci: {
     ...common,
     paths: ['features/**/*.feature'],
-    format: ['progress-bar', 'html:reports/cucumber-report.html', 'json:reports/cucumber-report.json', 'junit:reports/junit-report.xml'],
+    tags: 'not @wip',
+    format: ['progress', 'html:reports/cucumber-report.html', 'json:reports/cucumber-report.json', 'junit:reports/junit-report.xml'],
   },
 };
 `
@@ -117,7 +118,8 @@ module.exports = {
     requireModule: ['ts-node/register'],
     publishQuiet: true,
     paths: ['features/**/*.feature'],
-    format: ['progress-bar', 'html:reports/cucumber-report.html'],
+    tags: 'not @wip',
+    format: ['progress', 'html:reports/cucumber-report.html'],
   },
 };
 `;
@@ -190,7 +192,7 @@ setWorldConstructor(PlaywrightWorld);
     `export const config = {
   baseUrl:  process.env.BASE_URL  || 'http://localhost:3000',
   headless: process.env.HEADLESS  !== 'false',
-  slowMo:   Number(process.env.SLOW_MO) || 0,
+  slowMo:   Number(process.env.SLOWMO) || 0,
   timeout:  Number(process.env.TIMEOUT) || 30000,
 };
 `

@@ -42,7 +42,7 @@ You are a senior QA automation engineer specializing in BDD with Cucumber and Pl
 1. **Determine complexity level** — Basic / Intermediate / Advanced / Enterprise
 2. **Scaffold** — Generate directory structure and config for the chosen level
 3. **Write features** — Gherkin `.feature` files with correct tags and structure
-4. **Implement steps** — TypeScript step definitions using `@Given`/`@When`/`@Then`
+4. **Implement steps** — TypeScript step definitions using `Given`/`When`/`Then`
 5. **Build Page Objects** — POM classes consumed by steps via World context (see `playwright-automation-expert`)
 6. **Configure profiles** — `cucumber.js` profiles + HTML reporter
 7. **Set up hooks** — Browser lifecycle in `tests/hooks.ts`

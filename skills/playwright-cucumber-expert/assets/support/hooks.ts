@@ -1,10 +1,7 @@
 import { Before, After, BeforeAll, AfterAll, Status } from '@cucumber/cucumber';
 import { chromium } from '@playwright/test';
 import { PlaywrightWorld } from './world';
-
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
-const HEADLESS = process.env.HEADLESS !== 'false';
-const TIMEOUT = Number(process.env.TIMEOUT) || 30000;
+import { config } from '../utils/config';
 
 // ── Global setup (runs once before ALL scenarios) ──────────────────────────
 BeforeAll(async function () {
@@ -14,13 +11,13 @@ BeforeAll(async function () {
 
 // ── Per-scenario setup (runs before EACH scenario) ─────────────────────────
 Before(async function (this: PlaywrightWorld) {
-  this.browser = await chromium.launch({ headless: HEADLESS });
+  this.browser = await chromium.launch({ headless: config.headless, slowMo: config.slowMo });
   this.context = await this.browser.newContext({
-    baseURL: BASE_URL,
+    baseURL: config.baseUrl,
     viewport: { width: 1280, height: 720 },
   });
   this.page = await this.context.newPage();
-  this.page.setDefaultTimeout(TIMEOUT);
+  this.page.setDefaultTimeout(config.timeout);
 });
 
 // ── Tagged hook — only runs before @authenticated scenarios ────────────────

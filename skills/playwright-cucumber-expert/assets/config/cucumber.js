@@ -3,20 +3,22 @@
 //   npx cucumber-js                          (default profile)
 //   npx cucumber-js --profile smoke          (smoke profile)
 //   npx cucumber-js --profile regression     (regression profile)
+//   npx cucumber-js --profile ci             (CI profile)
 
 const common = {
-  require: ['tests/hooks.ts', 'tests/step_definitions/**/*.steps.ts'],
+  require: ['tests/hooks.ts', 'step_definitions/**/*.ts'],
   requireModule: ['ts-node/register'],
   publishQuiet: true,
 };
 
 module.exports = {
-  // ── Default: run all scenarios ──────────────────────────────────────────
+  // ── Default: run all scenarios except @wip ──────────────────────────────
   default: {
     ...common,
-    paths: ['tests/features/**/*.feature'],
+    paths: ['features/**/*.feature'],
+    tags: 'not @wip',
     format: [
-      'progress-bar',
+      'progress',
       'html:reports/cucumber-report.html',
       'json:reports/cucumber-report.json',
     ],
@@ -25,10 +27,10 @@ module.exports = {
   // ── Smoke: fast sanity check — @smoke tagged scenarios only ─────────────
   smoke: {
     ...common,
-    paths: ['tests/features/**/*.feature'],
-    tags: '@smoke',
+    paths: ['features/**/*.feature'],
+    tags: '@smoke and not @wip',
     format: [
-      'progress-bar',
+      'progress',
       'html:reports/smoke-report.html',
       'json:reports/smoke-report.json',
     ],
@@ -37,21 +39,22 @@ module.exports = {
   // ── Regression: full suite — @regression tagged scenarios ───────────────
   regression: {
     ...common,
-    paths: ['tests/features/**/*.feature'],
-    tags: '@regression',
+    paths: ['features/**/*.feature'],
+    tags: '@regression and not @wip',
     format: [
-      'progress-bar',
+      'progress',
       'html:reports/regression-report.html',
       'json:reports/regression-report.json',
     ],
   },
 
-  // ── CI: lean output for GitHub Actions ──────────────────────────────────
+  // ── CI: all non-wip with JUnit XML for GitHub Actions ───────────────────
   ci: {
     ...common,
-    paths: ['tests/features/**/*.feature'],
+    paths: ['features/**/*.feature'],
+    tags: 'not @wip',
     format: [
-      'progress-bar',
+      'progress',
       'html:reports/cucumber-report.html',
       'json:reports/cucumber-report.json',
       'junit:reports/junit-report.xml',
