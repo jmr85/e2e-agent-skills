@@ -10,6 +10,7 @@ metadata:
   role: specialist
   scope: testing
   output-format: code
+  related-skills: playwright-automation-expert
 ---
 
 # Playwright Cucumber Expert
