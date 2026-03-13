@@ -56,7 +56,7 @@ Load detailed guidance based on context:
 | Folder Structure | `references/folder-structure.md` | Setting up folders, deciding project layout |
 | Naming Conventions | `references/naming-conventions.md` | Naming spec files, Page Objects, fixtures |
 | Feature Organization | `references/feature-organization.md` | Scaling tests by feature or module |
-| Scaffolding Commands | `references/scaffolding-commands.md` | Generating the structure automatically |
+| Scaffolding Commands | `references/scaffolding-commands.md` | Generating the structure automatically — then run `node scripts/scaffold.mjs` to create all folders, fixture barrel, and `.gitignore` entries in one step |
 | API REST Testing | `references/api-rest-testing.md` | REST API: auth flows, HTTP codes, idempotency, performance, schemas |
 
 ## Constraints

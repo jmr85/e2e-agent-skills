@@ -56,7 +56,8 @@ Load detailed guidance based on context:
 | Topic | Reference | Load When |
 |-------|-----------|-----------|
 | Setup & Installation | `references/cucumber-setup.md` | Installing packages, tsconfig, first run |
-| Project Structure | `references/project-structure.md` | Folder layout by complexity level |
+| Project Structure | `references/project-structure.md` | Folder layout by complexity level — run `node scripts/scaffold-bdd.mjs --level <1-4>` to generate the full directory structure automatically |
+| Starter Templates | `assets/` | Ready-to-use template files: `config/cucumber.js`, `features/sample.feature`, `steps/sample.steps.ts`, `support/world.ts`, `support/hooks.ts`, `utils/config.ts`, `tsconfig/tsconfig.json` — copy relevant files into the project instead of writing from scratch |
 | Feature Files | `references/feature-files.md` | Writing Gherkin: Scenario, Outline, Background, DataTable |
 | Step Definitions | `references/step-definitions.md` | Given/When/Then, parameter types, World typing |
 | Hooks & World | `references/hooks-and-world.md` | World class, Before/After, browser lifecycle |
