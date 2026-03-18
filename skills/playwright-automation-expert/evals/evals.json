@@ -1,0 +1,62 @@
+{
+  "skill_name": "playwright-automation-expert",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to set up a new Playwright project from scratch. Create a complete project structure with proper folder organization, naming conventions, and a working playwright.config.ts. Use the recommended folder structure with tests/, pages/, fixtures/, and test-data/ directories. Include example files to show the pattern.",
+      "expected_output": "Complete project structure with playwright.config.ts, sample Page Object, sample test file, fixtures, and proper folder hierarchy",
+      "files": [],
+      "assertions": [
+        { "text": "playwright.config.ts is created" },
+        { "text": "tests/ directory with at least one .spec.ts file" },
+        { "text": "pages/ directory with Page Object using Page suffix" },
+        { "text": "fixtures/ directory with fixture file" },
+        { "text": "test-data/ directory is present" },
+        { "text": "No waitForTimeout() usage" },
+        { "text": "Role-based or label-based selectors used (getByRole, getByLabel)" }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Write E2E tests for a login flow using Playwright's test() and expect(). The app has email/password fields, a submit button, and shows error messages for invalid credentials. Create the LoginPage Page Object and tests for: successful login, wrong password, and empty fields validation.",
+      "expected_output": "LoginPage.ts with locators and methods, login.spec.ts with test cases for success, failure, and validation",
+      "files": [],
+      "assertions": [
+        { "text": "LoginPage.ts Page Object is created" },
+        { "text": "login.spec.ts test file is created" },
+        { "text": "At least 3 test cases: successful login, wrong password, empty fields" },
+        { "text": "LoginPage uses getByLabel or getByRole selectors" },
+        { "text": "No assertions inside Page Object (no expect() in LoginPage.ts)" },
+        { "text": "No waitForTimeout() in any file" },
+        { "text": "Tests are independent using beforeEach or per-test setup" }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Debug this flaky test that fails intermittently - it tries to click a button that appears after a loading spinner, but sometimes the click happens before the button is clickable. Fix the test to make it stable. Here's the current code: import { test, expect } from '@playwright/test'; test('submit form', async ({ page }) => { await page.goto('/form'); await page.click('#submit-btn'); await expect(page.locator('.success')).toBeVisible(); });",
+      "expected_output": "Fixed test code with proper waiting strategy and comments explaining why it was flaky",
+      "files": [],
+      "assertions": [
+        { "text": "Fixed test file is created" },
+        { "text": "No waitForTimeout() in the fix" },
+        { "text": "Explanation of why original test was flaky" },
+        { "text": "Fix waits for spinner hidden or button enabled before clicking" },
+        { "text": "Role-based selector preferred over CSS ID (#submit-btn)" }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Write an API test for a POST /api/login endpoint. The request body is {email, password} and response is {token, user: {id, name, email}}. I need to validate: HTTP 200 for valid credentials, HTTP 401 for invalid, response time under 500ms, and JSON schema matches expected structure.",
+      "expected_output": "API test file with status code assertions, schema validation, response time check, and error case handling",
+      "files": [],
+      "assertions": [
+        { "text": "API test file is created" },
+        { "text": "HTTP status asserted before response body in all tests" },
+        { "text": "HTTP 200 test for valid credentials" },
+        { "text": "HTTP 401 test for invalid credentials" },
+        { "text": "Response time under 500ms validated" },
+        { "text": "JSON schema covers token and user fields" }
+      ]
+    }
+  ]
+}
