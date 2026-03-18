@@ -1,0 +1,12 @@
+# Local benchmark/evaluation workspaces (do not commit)
+*-workspace/
+
+# Common generated evaluation artifacts
+**/review.html
+**/benchmark.json
+**/benchmark.md
+**/grading.json
+**/timing.json
+
+# Packaged skill binaries (optional build output)
+*.skill

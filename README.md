@@ -25,6 +25,12 @@ or install the BDD / Cucumber skill:
 npx skills add https://github.com/jmr85/e2e-agent-skills --skill playwright-cucumber-expert
 ```
 
+or install the Selenium + Cucumber + Java skill:
+
+```bash
+npx skills add https://github.com/jmr85/e2e-agent-skills --skill selenium-cucumber-expert
+```
+
 ---
 
 ## 🛠 Requirements
@@ -57,6 +63,14 @@ Once installed, the agent will be able to:
 - Configure `cucumber.js` with multi-profile execution (smoke, regression, CI)
 - Integrate Cucumber into a GitHub Actions CI pipeline
 
+**selenium-cucumber-expert**
+- Set up Selenium WebDriver 4 + Cucumber 7+ in Java (Maven-first, Gradle alternative)
+- Build maintainable frameworks with Page Object Model or Screenplay Pattern
+- Implement clean Given/When/Then step definitions with DI (PicoContainer/Guice)
+- Configure safe parallel execution with `ThreadLocal<WebDriver>`
+- Generate reports with ExtentReports + Cucumber HTML/JSON/JUnit
+- Integrate CI with GitHub Actions and Selenium Grid 4 / Docker
+
 Example usage inside the agent:
 
 ```
@@ -87,6 +101,15 @@ The skill will automatically load when you mention terms related to:
 - Scenario, Scenario Outline, Background
 - `@cucumber/cucumber`
 - Behaviour-driven development
+
+**selenium-cucumber-expert:**
+- Selenium, Selenium 4, WebDriver, Java test automation
+- Cucumber Java, Gherkin, Given/When/Then
+- Page Object Model (POM), Screenplay Pattern
+- Maven, Gradle, JUnit Platform, TestNG
+- ThreadLocal WebDriver, parallel execution
+- ExtentReports, Cucumber HTML/JSON/JUnit reports
+- Selenium Grid, Docker, GitHub Actions
 
 ---
 
@@ -125,6 +148,23 @@ e2e/
 - Multi-profile `cucumber.js` configuration
 - HTML / JSON / JUnit reporting with screenshot embedding
 - GitHub Actions CI integration
+
+### selenium-cucumber-expert
+- Selenium 4 + Cucumber 7+ setup for Java with Maven as primary build tool
+- Four project complexity levels (Basic, Intermediate, Advanced, Enterprise)
+- Guidance for both Page Object Model and Screenplay Pattern
+- Hooks + dependency injection patterns for scalable step design
+- Parallel execution with JUnit Platform and TestNG option
+- ExtentReports plus Cucumber native HTML/JSON/JUnit reporting
+- GitHub Actions + Selenium Grid 4 / Docker integration
+- Scaffolding script (`scripts/scaffold-selenium-bdd.mjs`) and reusable assets
+
+---
+
+## ✅ Repository Notes
+
+- `skills/selenium-cucumber-expert/evals/evals.json` is intentionally included for future skill benchmarking and regression checks.
+- Evaluation run artifacts/workspaces are local development outputs and should not be versioned.
 
 ---
 
