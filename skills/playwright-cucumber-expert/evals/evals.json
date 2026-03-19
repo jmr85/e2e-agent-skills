@@ -1,0 +1,121 @@
+{
+  "skill_name": "playwright-cucumber-expert",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Quiero arrancar un proyecto de automatización BDD desde cero para una app de reservas de turnos médicos. Usamos TypeScript, y el equipo eligió Playwright + @cucumber/cucumber. Nunca configuramos esto antes. Necesito la estructura de carpetas, cómo instalar los paquetes, el archivo cucumber.js con un perfil por defecto, y un ejemplo de World class que maneje el ciclo de vida del browser (abrir y cerrar en cada escenario). También quiero que los screenshots se adjunten automáticamente cuando un escenario falla.",
+      "expected_output": "Estructura de carpetas con features/, step_definitions/, utils/ (world.ts, config.ts), tests/hooks.ts. Package.json con @cucumber/cucumber, @playwright/test o playwright, ts-node, y @types/node. cucumber.js con perfil default y publishQuiet: true. PlaywrightWorld class con setWorldConstructor, propiedades browser y page, before hook lanzando browser fresh por escenario, after hook cerrando en try/finally con this.attach() para screenshot en fallo.",
+      "assertions": [
+        {
+          "id": "world-class-setWorldConstructor",
+          "text": "The response defines a custom World class (PlaywrightWorld or similar) and registers it with setWorldConstructor"
+        },
+        {
+          "id": "before-hook-launches-browser",
+          "text": "The Before hook launches a fresh browser instance per scenario (not per suite) — browser.newPage() or similar called inside Before"
+        },
+        {
+          "id": "after-hook-try-finally",
+          "text": "The After hook closes the browser inside a try/finally block to ensure cleanup even when the scenario fails"
+        },
+        {
+          "id": "screenshot-on-failure",
+          "text": "The After hook attaches a screenshot via this.attach() when the scenario has failed (checking isFailed() or scenario.result.status)"
+        },
+        {
+          "id": "cucumber-js-publishQuiet",
+          "text": "The cucumber.js config includes publishQuiet: true in every profile to suppress Cucumber Cloud upload prompts"
+        },
+        {
+          "id": "no-arrow-functions-in-hooks",
+          "text": "Before and After hooks use async function() syntax — not arrow functions — so that 'this' refers to the World instance"
+        },
+        {
+          "id": "config-ts-present",
+          "text": "A utils/config.ts (or equivalent) file is provided to centralize baseURL, credentials, and timeout configuration"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Ya tengo el World y los hooks funcionando. Ahora necesito escribir los tests para el flujo de login de la app. La página de login tiene un campo email (label 'Email'), un campo password (label 'Contraseña'), un botón submit (role button name 'Iniciar sesión'), y muestra un mensaje de error con texto 'Credenciales inválidas' cuando las credenciales son incorrectas. Dame el feature file en Gherkin con al menos 3 escenarios (login exitoso, contraseña incorrecta, y email no registrado), los step definitions en TypeScript que usen un LoginPage Page Object, y la clase LoginPage.",
+      "expected_output": "login.feature con Background: para navegar a la URL, 3 escenarios requeridos con tags @auth y @smoke/@regression. Step definitions usando async function(this: PlaywrightWorld) — sin arrow functions — con delegación total a LoginPage, assertions solo en Then. LoginPage con locators via getByLabel/getByRole, sin expect() interno, métodos que retornan datos primitivos.",
+      "assertions": [
+        {
+          "id": "step-defs-no-arrow-functions",
+          "text": "All step definitions use async function(this: PlaywrightWorld) syntax — not arrow functions — in every Given, When, and Then"
+        },
+        {
+          "id": "step-defs-this-typed-as-world",
+          "text": "The 'this' parameter in step definitions is explicitly typed as PlaywrightWorld (or the custom World type defined in the project)"
+        },
+        {
+          "id": "page-object-no-expect",
+          "text": "The LoginPage class contains no Playwright expect() assertions — it only performs actions and returns primitive values"
+        },
+        {
+          "id": "page-object-getByRole-or-getByLabel",
+          "text": "LoginPage uses getByLabel() or getByRole() locators — not CSS selectors or XPath — for the email, password, and submit button"
+        },
+        {
+          "id": "assertions-in-then-only",
+          "text": "expect() calls appear only inside Then step definitions — not inside Given or When steps"
+        },
+        {
+          "id": "no-page-interactions-in-steps",
+          "text": "Step definitions contain no direct page.click(), page.fill(), or other Playwright page interactions — all browser actions are delegated to LoginPage"
+        },
+        {
+          "id": "feature-three-required-scenarios",
+          "text": "The feature file contains all 3 required scenarios: successful login, wrong password, and unregistered email"
+        },
+        {
+          "id": "feature-domain-and-runlevel-tags",
+          "text": "Each scenario or the Feature block uses at least one domain tag (@auth) and one run-level tag (@smoke or @regression)"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Tenemos la suite BDD funcionando localmente. Ahora quiero configurar múltiples perfiles en cucumber.js: uno para smoke (solo @smoke), uno para regression (todos los tags), y uno para sanity (solo @sanity). También quiero el workflow de GitHub Actions para que en cada pull request corra el perfil smoke, y en push a main corra el de regression completo. Usamos Node 20 y los browsers los instala Playwright.",
+      "expected_output": "cucumber.js con al menos 3 profiles: smoke con tags: '@smoke', regression con tags: 'not @wip', sanity con tags: '@sanity'. Todos con publishQuiet: true. package.json scripts: test:smoke, test:regression, test:sanity. GitHub Actions YAML con on: pull_request corriendo test:smoke, y on: push branches: [main] corriendo test:regression. Step de actions/setup-node con node-version 20. Step de npx playwright install --with-deps para instalar browsers.",
+      "assertions": [
+        {
+          "id": "cucumber-js-three-profiles",
+          "text": "The cucumber.js file defines at least 3 named profiles: smoke, regression, and sanity (or default/sanity)"
+        },
+        {
+          "id": "profiles-publishQuiet",
+          "text": "Every profile in cucumber.js includes publishQuiet: true"
+        },
+        {
+          "id": "profiles-tag-expressions",
+          "text": "Each profile uses a tag expression (e.g. tags: '@smoke', tags: 'not @wip') to filter which scenarios it runs"
+        },
+        {
+          "id": "package-json-scripts",
+          "text": "package.json includes test:smoke and test:regression scripts that reference the correct cucumber.js profiles"
+        },
+        {
+          "id": "github-actions-pr-trigger",
+          "text": "The GitHub Actions workflow triggers on pull_request and runs the smoke profile (or @smoke tag filtered tests)"
+        },
+        {
+          "id": "github-actions-main-push-trigger",
+          "text": "The GitHub Actions workflow triggers on push to main and runs the regression profile (full suite)"
+        },
+        {
+          "id": "github-actions-setup-node",
+          "text": "The GitHub Actions workflow uses actions/setup-node with node-version 20 (or the version specified in the prompt)"
+        },
+        {
+          "id": "playwright-install-browsers",
+          "text": "The GitHub Actions workflow includes a step running 'npx playwright install' or 'npx playwright install --with-deps' to install browser binaries"
+        }
+      ],
+      "files": []
+    }
+  ]
+}

@@ -3,120 +3,120 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "Tengo una aplicación de e-commerce y quiero empezar a escribir pruebas automatizadas BDD con Selenium 4 y Cucumber en Java usando Maven. ¿Cómo estructuro el proyecto? Dame el pom.xml con las dependencias correctas y la estructura de carpetas recomendada para un equipo de 3 personas con unos 30 escenarios. También quiero tener reportes bonitos al finalizar las pruebas.",
-      "expected_output": "Estructura de carpetas nivel 2 (Intermediate), pom.xml con dependencias de Selenium 4, Cucumber 7, WebDriverManager, PicoContainer, ExtentReports, y logback. Explicación de los archivos clave como TestContext, Hooks, DriverManager y TestRunner. Mención de ExtentReports para reportes.",
+      "prompt": "Estoy arrancando un proyecto nuevo de automatización BDD para una app de e-commerce (tienda de ropa). Somos 3 QAs y calculamos unos 30 escenarios para el sprint 1. Usamos Java, Maven, Chrome y Selenium 4. Quiero que me des el pom.xml completo con las dependencias correctas y la estructura de carpetas que me recomendás para este equipo. También necesito saber cómo manejar el WebDriver de forma segura (sin que se pise entre tests) y tener reportes HTML al final de cada ejecución.",
+      "expected_output": "pom.xml completo con Selenium 4, Cucumber 7, WebDriverManager, cucumber-picocontainer y un reporter (ExtentReports o cucumber-html-reporter). Estructura de carpetas Intermediate (nivel 2) con features/ organizado por dominio, steps/, pages/, support/ (DriverManager, Hooks, TestContext). Explicación de ThreadLocal<WebDriver> o inyección via PicoContainer para manejo seguro del driver. Configuración de maven-failsafe-plugin para correr los ITs. Referencia a ExtentReports o Cucumber HTML para reportes.",
       "assertions": [
         {
-          "id": "pom-includes-selenium4",
-          "text": "The pom.xml includes Selenium 4 (selenium-java artifact, version 4.x) as a dependency"
+          "id": "pom-selenium4",
+          "text": "The pom.xml includes selenium-java with a 4.x version"
         },
         {
-          "id": "pom-includes-cucumber7",
-          "text": "The pom.xml includes Cucumber 7 (cucumber-java and cucumber-junit-platform-engine or similar, version 7.x) as dependencies"
+          "id": "pom-cucumber7",
+          "text": "The pom.xml includes cucumber-java and either cucumber-junit-platform-engine or cucumber-testng with a 7.x version"
         },
         {
-          "id": "pom-includes-webdrivermanager",
-          "text": "The pom.xml includes WebDriverManager (io.github.bonigarcia:webdrivermanager) to avoid manual driver management"
+          "id": "pom-webdrivermanager",
+          "text": "The pom.xml includes io.github.bonigarcia:webdrivermanager to handle driver binaries automatically"
         },
         {
-          "id": "pom-includes-picocontainer",
-          "text": "The pom.xml includes cucumber-picocontainer for dependency injection between step classes"
+          "id": "pom-picocontainer",
+          "text": "The pom.xml includes cucumber-picocontainer for constructor-based dependency injection between step classes"
         },
         {
-          "id": "uses-maven-failsafe",
-          "text": "The pom.xml uses maven-failsafe-plugin (not surefire) for running the integration tests"
+          "id": "pom-failsafe-not-surefire",
+          "text": "The pom.xml uses maven-failsafe-plugin (not maven-surefire-plugin) to execute integration tests via mvn verify"
         },
         {
-          "id": "level2-structure-recommended",
-          "text": "The response recommends a Level 2 / Intermediate project structure (features organized by domain, TestContext, utils) appropriate for a 3-person team with 30 scenarios"
+          "id": "structure-intermediate",
+          "text": "The recommended folder structure is at least Intermediate level: features organized by domain, a support/ or utils/ folder containing DriverManager and Hooks, and a pages/ folder for Page Objects"
         },
         {
-          "id": "reporting-mentioned",
-          "text": "The response includes ExtentReports or Cucumber native HTML reporting configuration (not just maven output)"
+          "id": "threadlocal-or-picocontainer",
+          "text": "The response explains ThreadLocal<WebDriver> or PicoContainer DI (TestContext) as the mechanism to avoid shared WebDriver instances between tests"
         },
         {
-          "id": "threadlocal-or-di-mentioned",
-          "text": "The response mentions ThreadLocal<WebDriver> or PicoContainer DI for safe WebDriver management (not a static driver field)"
+          "id": "html-reporting",
+          "text": "The response includes configuration for HTML reporting (ExtentReports, Cucumber HTML reporter, or Allure) — not just console output"
         }
       ],
       "files": []
     },
     {
       "id": 2,
-      "prompt": "Necesito crear un Page Object para la página de búsqueda de productos de mi tienda online. La página tiene: un campo de texto para buscar (id='search-input'), un botón de buscar (css: 'button.search-btn'), una lista de resultados (css: '.product-card'), y un mensaje cuando no hay resultados (id='no-results-msg'). También necesito los steps de Cucumber que consumen este Page Object en Java, y un feature file de Gherkin con al menos 3 escenarios: búsqueda exitosa, búsqueda sin resultados, y búsqueda con término vacío.",
-      "expected_output": "Clase SearchPage.java extendiendo BasePage con locators como constantes By, métodos search(), getResults(), isNoResultsDisplayed(). Steps de Cucumber en SearchSteps.java con @Given/@When/@Then, sin assertions en When/Given. Feature file search.feature con Background si aplica, Scenario Outline para las búsquedas fallidas, tags @smoke y @regression.",
+      "prompt": "Ya tengo el proyecto base armado con Selenium 4, Cucumber y PicoContainer. Ahora necesito implementar la funcionalidad de búsqueda de productos. La página tiene: un campo de texto con id='search-input', un botón con css 'button.search-btn', una grilla de resultados con css '.product-card', y un div con id='no-results-msg' cuando no hay resultados. Dame el Page Object en Java, los step definitions de Cucumber que lo usen, y el feature file de Gherkin con los siguientes casos: búsqueda exitosa con resultados, búsqueda sin resultados, y búsqueda con campo vacío. Mi clase base se llama BasePage y ya tengo un TestContext que inyecto por constructor.",
+      "expected_output": "SearchPage.java extendiendo BasePage, con los 4 locators como constantes By usando los selectores exactos del enunciado, métodos search(String term), getResultCount(), isNoResultsMessageDisplayed(). SearchSteps.java con inyección por constructor de TestContext, @Given/@When/@Then sin assertions en Given/When. search.feature con Background: para navegar a la página, los 3 escenarios requeridos con tags @smoke y @regression, usando Scenario Outline para los casos negativos.",
       "assertions": [
         {
-          "id": "page-object-locators-correct",
-          "text": "SearchPage uses the exact locators from the prompt: By.id('search-input'), By.cssSelector('button.search-btn'), By.cssSelector('.product-card'), and By.id('no-results-msg')"
+          "id": "search-page-exact-locators",
+          "text": "SearchPage defines locators using exactly By.id(\"search-input\"), By.cssSelector(\"button.search-btn\"), By.cssSelector(\".product-card\"), and By.id(\"no-results-msg\")"
         },
         {
-          "id": "page-object-extends-basepage",
-          "text": "SearchPage extends BasePage (not bare WebDriver) so that wait helpers are inherited"
+          "id": "search-page-extends-basepage",
+          "text": "SearchPage extends BasePage (not a bare WebDriver field) to inherit wait helpers and driver access"
         },
         {
-          "id": "page-object-no-assertions",
-          "text": "SearchPage contains no assertions (no assert/assertTrue/assertEquals) — assertions belong only in step definitions"
+          "id": "search-page-no-assertions",
+          "text": "SearchPage contains no assertions (no assertTrue, assertEquals, assertThat, etc.) — the class only performs actions and returns data"
         },
         {
-          "id": "page-object-returns-primitives",
-          "text": "SearchPage query methods return primitives, Strings, or counts (int/boolean/String) rather than WebElement objects"
+          "id": "search-page-returns-primitives",
+          "text": "SearchPage methods that query state return primitives or Strings (int count, boolean visible, String text) rather than WebElement objects"
         },
         {
-          "id": "steps-picocontainer-injection",
-          "text": "SearchSteps injects its dependencies (TestContext or WebDriver) via constructor (PicoContainer pattern), not static fields or @Autowired"
+          "id": "steps-constructor-injection",
+          "text": "SearchSteps receives TestContext (or equivalent) via constructor injection — no @Autowired, no static fields, no new instantiation inside the class"
         },
         {
-          "id": "steps-assertions-in-then-only",
-          "text": "Assertions (assertTrue, assertEquals, etc.) appear only in @Then step methods, not in @Given or @When methods"
+          "id": "steps-assertions-then-only",
+          "text": "All assertions (assertTrue, assertEquals, assertThat, etc.) appear only inside @Then annotated methods — never inside @Given or @When methods"
         },
         {
-          "id": "feature-three-required-scenarios",
-          "text": "The feature file contains all 3 required scenarios: successful search, search with no results, and search with empty/blank term"
+          "id": "feature-three-scenarios",
+          "text": "The feature file contains all 3 required scenarios: successful search with results, search returning no results, and search with empty input"
         },
         {
-          "id": "feature-gherkin-tags",
-          "text": "The feature file uses Cucumber tags (e.g. @smoke, @regression, @negative) on at least some scenarios"
+          "id": "feature-cucumber-tags",
+          "text": "The feature file uses Cucumber tags (@smoke, @regression, @negative, or similar) on at least one scenario or the Feature level"
         }
       ],
       "files": []
     },
     {
       "id": 3,
-      "prompt": "Quiero configurar mis tests de Cucumber+Selenium en Java para que corran en paralelo usando Maven. Tengo 50 escenarios y tardan 20 minutos corriendo en serie, necesito bajarlos a ~5 minutos. Explícame cómo configurar la ejecución paralela, qué cambios necesito hacer en mi código actual (especialmente en el manejo del WebDriver), y cómo integrar esto en GitHub Actions para que se ejecute automáticamente en cada pull request.",
-      "expected_output": "Configuración de cucumber.properties con parallel.enabled=true, estrategia dynamic o fixed. Explicación de ThreadLocal<WebDriver> en DriverManager con quitDriver() correcto. Configuración de Maven Failsafe plugin. GitHub Actions workflow YAML con setup-java, browser installation, mvn verify con -Dheadless=true. Mención de driverThread.remove() para evitar memory leaks.",
+      "prompt": "Tenemos 50 escenarios de Cucumber+Selenium en Java y cada ejecución completa tarda 20 minutos en serie. Necesito bajarla a unos 5 minutos. ¿Cómo configuro la ejecución en paralelo con Maven? También quiero que esto corra automáticamente en GitHub Actions: los tests @smoke en cada pull request, y la suite completa cuando se hace push a main. Decime qué cambios necesito en el DriverManager para que no haya problemas con threads, y cómo instalo el browser en el runner de GitHub.",
+      "expected_output": "cucumber.properties con cucumber.execution.parallel.enabled=true y estrategia dynamic o fixed con thread count. DriverManager refactorizado con ThreadLocal<WebDriver> y método quitDriver() que llama a driverThread.remove() después de driver.quit(). Configuración de maven-failsafe-plugin con el thread count. GitHub Actions YAML con trigger on: pull_request y push to main, steps de actions/setup-java, instalación de Chrome o mvn dependency para el browser, y mvn verify -Dheadless=true. Explicación de por qué Thread.sleep() está prohibido en paralelo.",
       "assertions": [
         {
-          "id": "cucumber-properties-parallel-enabled",
-          "text": "The response provides a cucumber.properties file (or equivalent configuration) that sets cucumber.execution.parallel.enabled=true"
+          "id": "parallel-enabled-property",
+          "text": "The response provides a cucumber.properties (or equivalent) file that sets cucumber.execution.parallel.enabled=true"
         },
         {
           "id": "threadlocal-webdriver",
-          "text": "DriverManager uses ThreadLocal<WebDriver> to isolate WebDriver instances per thread, not a static or shared field"
+          "text": "The DriverManager class uses ThreadLocal<WebDriver> to store the driver instance — not a static WebDriver field"
         },
         {
           "id": "threadlocal-remove-on-quit",
-          "text": "The quitDriver() method calls driverThread.remove() (not just driver.quit()) to prevent memory leaks in thread pools"
+          "text": "The quitDriver() method calls driverThread.remove() after driver.quit() to prevent memory leaks in the thread pool"
         },
         {
-          "id": "maven-failsafe-config",
-          "text": "The response configures maven-failsafe-plugin (not surefire) to run parallel integration tests via mvn verify"
+          "id": "failsafe-parallel-config",
+          "text": "The maven-failsafe-plugin is configured with a thread count or parallel strategy to enable concurrent test execution"
         },
         {
-          "id": "github-actions-workflow",
-          "text": "The response includes a GitHub Actions workflow YAML that triggers on pull_request and runs the tests in headless mode"
+          "id": "github-actions-dual-trigger",
+          "text": "The GitHub Actions workflow triggers on both pull_request and push to main, with different test scopes (smoke vs full suite) or tag expressions"
         },
         {
           "id": "github-actions-setup-java",
           "text": "The GitHub Actions workflow uses actions/setup-java to configure the JDK before running tests"
         },
         {
-          "id": "headless-flag-in-ci",
-          "text": "The GitHub Actions run command passes -Dheadless=true (or equivalent) so the browser runs without a display in CI"
+          "id": "github-actions-browser-install",
+          "text": "The GitHub Actions workflow includes a step to install or configure the browser (e.g., apt-get install google-chrome, or a Selenium Manager step)"
         },
         {
-          "id": "parallelism-strategy-explained",
-          "text": "The response explains how to configure the parallelism level (fixed or dynamic strategy) and connects it to the goal of ~5 min runtime for 50 scenarios"
+          "id": "headless-mode-ci",
+          "text": "The Maven command in CI passes -Dheadless=true or equivalent to run the browser in headless mode in the GitHub Actions runner"
         }
       ],
       "files": []
