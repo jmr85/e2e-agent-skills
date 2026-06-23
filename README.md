@@ -31,6 +31,12 @@ or install the Selenium + Cucumber + Java skill:
 npx skills add https://github.com/jmr85/e2e-agent-skills --skill selenium-cucumber-expert
 ```
 
+or install the Appium + Python mobile skill:
+
+```bash
+npx skills add https://github.com/jmr85/e2e-agent-skills --skill appium-python-expert
+```
+
 ---
 
 ## 🛠 Requirements
@@ -38,6 +44,11 @@ npx skills add https://github.com/jmr85/e2e-agent-skills --skill selenium-cucumb
 - Node.js 18+
 - npm or pnpm
 - CLI compatible with `skills` (for example OpenCode, Claude Code, or other compatible agents)
+
+**Additional requirements for `appium-python-expert`:**
+- Python 3.10+
+- Appium 2.x (`npm install -g appium`)
+- Android SDK / Xcode (depending on target platform)
 
 ---
 
@@ -71,6 +82,15 @@ Once installed, the agent will be able to:
 - Generate reports with ExtentReports + Cucumber HTML/JSON/JUnit
 - Integrate CI with GitHub Actions and Selenium Grid 4 / Docker
 
+**appium-python-expert**
+- Set up Appium 2.x with Python (Appium-Python-Client + pytest) for Android and iOS
+- Configure UIAutomator2 (Android) and XCUITest (iOS) drivers with W3C capabilities
+- Build Page Object Model structures for mobile apps
+- Implement touch gestures (swipe, scroll, long press, drag & drop, pinch/zoom) using the W3C Actions API
+- Use Appium Inspector to identify and validate locators (Accessibility ID, UIAutomator, iOS Predicate String, Class Chain)
+- Generate Allure reports with steps, severity levels and automatic screenshots on failure
+- Integrate mobile E2E tests into GitHub Actions and Jenkins pipelines
+
 Example usage inside the agent:
 
 ```
@@ -81,6 +101,12 @@ Or:
 
 ```
 Generate an E2E test applying the Page Object Model and anti-flaky best practices
+```
+
+Or:
+
+```
+Set up an Appium + Python project for Android with Page Object Model and Allure reporting
 ```
 
 The skill will automatically load when you mention terms related to:
@@ -111,10 +137,20 @@ The skill will automatically load when you mention terms related to:
 - ExtentReports, Cucumber HTML/JSON/JUnit reports
 - Selenium Grid, Docker, GitHub Actions
 
+**appium-python-expert:**
+- Appium, Appium 2.x, mobile testing, mobile automation
+- Android testing, iOS testing, UIAutomator2, XCUITest
+- Appium Python Client, pytest mobile, mobile E2E
+- Page Object Model (mobile), capabilities, Appium Inspector
+- Touch gestures, swipe, scroll, long press, drag and drop, pinch zoom
+- Allure reports, pytest fixtures, conftest
+- GitHub Actions mobile, Jenkins mobile pipeline
+
 ---
 
 ## 📂 Recommended Structure
 
+**Web (Playwright / Selenium):**
 ```
 e2e/
  ├── tests/
@@ -125,6 +161,21 @@ e2e/
  ├── fixtures/
  ├── utils/
  └── playwright.config.ts
+```
+
+**Mobile (Appium + Python):**
+```
+project/
+ ├── tests/
+ │    ├── android/
+ │    └── ios/
+ ├── pages/
+ ├── config/
+ ├── utils/
+ ├── allure-results/
+ ├── .env
+ ├── pytest.ini
+ └── requirements.txt
 ```
 
 ---
@@ -158,6 +209,18 @@ e2e/
 - ExtentReports plus Cucumber native HTML/JSON/JUnit reporting
 - GitHub Actions + Selenium Grid 4 / Docker integration
 - Scaffolding script (`scripts/scaffold-selenium-bdd.mjs`) and reusable assets
+
+### appium-python-expert
+- Appium 2.x + Python quick-start guide (installation, drivers, virtual environment)
+- Capabilities configuration for Android (UIAutomator2) and iOS (XCUITest) with `.env` support
+- `conftest.py` with `android_driver` and `ios_driver` pytest fixtures
+- `BasePage` with built-in W3C gesture support (swipe, long press, double tap, drag & drop, pinch/zoom, scroll to element)
+- Allure integration: decorators (`@allure.epic`, `@allure.story`, `@allure.severity`), step context managers and automatic screenshot on failure
+- Appium Inspector guide: connection setup, capabilities JSON for 4 device scenarios, locator strategy priority table
+- Complete gesture reference (`utils/gestures.py`) including native `mobile:` commands for Android and iOS
+- GitHub Actions pipeline (Android emulator + iOS simulator, including Allure artifact upload)
+- Jenkins declarative pipelines (Android agent, macOS agent, parallel multi-platform)
+- Troubleshooting table for the most common Appium session errors
 
 ---
 
