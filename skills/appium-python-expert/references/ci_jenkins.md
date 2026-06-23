@@ -95,14 +95,28 @@ pipeline {
                         --html=${REPORTS_DIR}/android-report.html \
                         --self-contained-html \
                         -m "android" \
-                        --junitxml=${REPORTS_DIR}/android-junit.xml
+                        --junitxml=${REPORTS_DIR}/android-junit.xml \
+                        --alluredir=allure-results
                 '''
+            }
+        }
+
+        stage('Generate Allure Report') {
+            steps {
+                sh 'allure generate allure-results --clean -o allure-report'
             }
         }
     }
 
     post {
         always {
+            // Allure Report (requiere plugin Allure Jenkins)
+            allure([
+                includeProperties: false,
+                jdk: '',
+                results: [[path: 'allure-results']]
+            ])
+
             // Publish HTML report
             publishHTML(target: [
                 allowMissing: false,
@@ -310,6 +324,7 @@ pipeline {
 |---|---|
 | `HTML Publisher` | Render pytest-html reports |
 | `JUnit` | Parse JUnit XML results |
+| `Allure` | Publicar reportes Allure interactivos |
 | `Email Extension` | Failure notifications |
 | `Android Emulator` | Manage AVDs from Jenkins |
 | `Pipeline` | Declarative pipelines |

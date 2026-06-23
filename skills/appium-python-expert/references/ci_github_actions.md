@@ -81,11 +81,24 @@ jobs:
             --self-contained-html \
             -m "android"
 
-      - name: Upload test report
+      - name: Generate Allure report
+        if: always()
+        run: |
+          npm install -g allure-commandline
+          allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: android-test-report
+          name: allure-android-report
+          path: allure-report/
+
+      - name: Upload pytest HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-html-report
           path: reports/
 
       - name: Upload Appium logs on failure
